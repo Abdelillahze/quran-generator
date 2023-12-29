@@ -14,7 +14,7 @@ export default async function makeVideo() {
   try {
     const input = "video.mp4";
 
-    const { verses, surah, reader } = await getVerse();
+    const { verses, surah, reader, readerAr } = await getVerse();
     const start = verses[0].start_time;
     const end = verses[verses.length - 1].end_time;
 
@@ -64,7 +64,11 @@ export default async function makeVideo() {
     }
 
     console.log("start uploading");
-    UploadVideo(surah.name, output, reader);
+    UploadVideo(`سورة ${surah.name}`, output, {
+      reader: readerAr,
+      start: verses[0].ayah,
+      end: verses[verses.length - 1].ayah,
+    });
     console.log("completed");
   } catch (err) {
     console.log(err);

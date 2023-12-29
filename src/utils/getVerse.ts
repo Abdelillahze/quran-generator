@@ -4,7 +4,7 @@ import getVerseTiming from "./getVerseTiming";
 export default async function getVerse() {
   const randomSurah = Math.ceil(Math.random() * 114);
   const res = await axios.get(
-    `https://mp3quran.net/api/v3/ayat_timing?surah=${randomSurah}&read=5`
+    `https://mp3quran.net/api/v3/ayat_timing?surah=${randomSurah}&read=31`
   );
   const surahName = (
     await axios.get("https://mp3quran.net/api/v3/suwar?language=ar")
@@ -26,6 +26,7 @@ export default async function getVerse() {
   return {
     verses,
     surah: { index: randomSurah, name: surahName },
-    reader: "balilah",
+    reader: "shl",
+    readerAr: "سهل ياسين",
   };
 }

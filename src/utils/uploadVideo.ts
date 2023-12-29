@@ -20,7 +20,13 @@ const categoryIds = {
 const SCOPES = ["https://www.googleapis.com/auth/youtube.upload"];
 const TOKEN_PATH = "./" + "client_oauth_token.json";
 
-exports.UploadVideo = (title: string, name: string, reader: string) => {
+interface Iinfo {
+  reader: string;
+  start: number;
+  end: number;
+}
+
+exports.UploadVideo = (title: string, name: string, info: Iinfo) => {
   const videoFilePath = `./src/videos/${name}`;
   assert(fs.existsSync(videoFilePath));
 
@@ -34,7 +40,7 @@ exports.UploadVideo = (title: string, name: string, reader: string) => {
       }
       // Authorize a client with the loaded credentials, then call the YouTube API.
       authorize(JSON.parse(content), (auth: any) =>
-        uploadVideo(auth, title, name, reader)
+        uploadVideo(auth, title, name, info)
       );
     }
   );
@@ -45,7 +51,7 @@ exports.UploadVideo = (title: string, name: string, reader: string) => {
  *
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-function uploadVideo(auth: any, title: string, name: string, reader: string) {
+function uploadVideo(auth: any, title: string, name: string, info: Iinfo) {
   const service = google.youtube("v3");
   const videoFilePath = `./src/videos/${name}`;
 
@@ -56,7 +62,7 @@ function uploadVideo(auth: any, title: string, name: string, reader: string) {
       requestBody: {
         snippet: {
           title,
-          description: `${title}\nالقارئ ${reader}`,
+          description: `${title} [${info.start}-${info.end}]\nالقارئ ${info.reader}\nسبحان الله وبحمده سبحان الله العظيم♥\nصل على رسول الله\n أدعو لجدتي بالرحمة والمغفرة`,
           tags: "quran,قران الكريم, قران",
           categoryId: 24,
           defaultLanguage: "ar",
