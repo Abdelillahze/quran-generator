@@ -2,7 +2,7 @@ import http from "https";
 import { createWriteStream } from "fs";
 
 export default async function getVersesSound(surah: number, reader: string) {
-  const file = createWriteStream("src/raw/audio.mp3");
+  const file = createWriteStream("temp/audio.mp3");
   return await new Promise((resolve: any, reject: any) => {
     try {
       http.get(

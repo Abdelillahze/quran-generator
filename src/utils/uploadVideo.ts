@@ -26,7 +26,7 @@ interface Iinfo {
   end: number;
 }
 
-exports.UploadVideo = (title: string, name: string, info: Iinfo) => {
+export const UploadVideo = (title: string, name: string, info: Iinfo) => {
   const videoFilePath = `./src/videos/${name}`;
   assert(fs.existsSync(videoFilePath));
 
